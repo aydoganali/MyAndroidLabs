@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 
@@ -45,7 +47,16 @@ public class MainActivity extends AppCompatActivity {
                     model.onOrOff.postValue(onOrOff);
                 }
         );
-        variableBinding.theImageBtn.setOnClickListener(clk -> { });
+        ImageButton imgBtn = variableBinding.theImageBtn;
+        imgBtn.setOnClickListener(clk -> {
+            int width = imgBtn.getWidth();
+            int height = imgBtn.getWidth();
+
+            String toastMessage = "The width = " + width + "and height = " + height;
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+
+        });
+
 
 
         model.onOrOff.observe(this, newValue -> {
@@ -73,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             model.editString.postValue(string);
             btn.setText("You clicked the button");
         });
+
 
 
 
