@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         variableBinding.theCheckbox.setOnCheckedChangeListener(
                 ( btn, onOrOff ) -> {
                     model.onOrOff.postValue(onOrOff);
+
                 } );
 
         variableBinding.theSwitch.setOnCheckedChangeListener(
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     model.onOrOff.postValue(onOrOff);
                 }
         );
+
         ImageButton imgBtn = variableBinding.theImageBtn;
         imgBtn.setOnClickListener(clk -> {
             int width = imgBtn.getWidth();
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             variableBinding.theCheckbox.setChecked(newValue);
             variableBinding.theSwitch.setChecked(newValue);
             variableBinding.theRadioButton.setChecked(newValue);
+
+            String toastMessage = "The value is now " + newValue;
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
 
         });
 
@@ -84,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
             model.editString.postValue(string);
             btn.setText("You clicked the button");
         });
-
-
-
 
     }
 }
