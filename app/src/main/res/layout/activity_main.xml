@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <TextView
         android:id="@+id/textview"
@@ -27,4 +27,30 @@
         android:hint="@string/hinttext"
         android:minHeight="48dp"
         android:text="@string/editmessage"></EditText>
+
+
+    <CheckBox
+        android:text="I'm a checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/theCheckbox" />
+
+    <Switch
+        android:text="I'm a switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/theSwitch" />
+
+    <RadioButton
+        android:text="I'm a radio button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/theRadioButton" />
+
+    <ImageButton
+        android:id="@+id/theImageBtn"
+        android:src="@drawable/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
