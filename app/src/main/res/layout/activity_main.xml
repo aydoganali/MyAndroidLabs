@@ -4,9 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+
+    android:layout_marginTop="27dp"
+    android:layout_marginBottom="27dp"
+    android:layout_marginLeft="48dp"
+    android:layout_marginRight="48dp" >
 
     <Button
+        android:nextFocusUp="@id/button"
+        android:nextFocusDown="@id/button"
+        android:nextFocusLeft="@id/button3"
+        android:nextFocusRight="@id/button2"
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,6 +29,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:nextFocusUp="@id/button2"
+        android:nextFocusDown="@id/button2"
+        android:nextFocusLeft="@id/button"
+        android:nextFocusRight="@id/button3"
+
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/button" />
 
     <Button
+
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
