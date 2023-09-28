@@ -3,4 +3,5 @@
     <string name="app_name">Ali\'s Android Labs</string>
     <string name="hello_message">Selam Dunya</string>
     <string name="button_message">Ben bir butonum</string>
+    <string name="button1">Dugme 1</string>
 </resources>
