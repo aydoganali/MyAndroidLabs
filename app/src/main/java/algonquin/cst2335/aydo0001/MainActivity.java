@@ -1,14 +1,17 @@
 package algonquin.cst2335.aydo0001;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import algonquin.cst2335.aydo0001.databinding.ActivityMainBinding;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,48 +20,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
+
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String emailAddress = prefs.getString("LoginName", "");
+        EditText emailEditText = findViewById(R.id.nameText);
+        emailEditText.setText(emailAddress);
         Log.i(TAG, "MainActivity is now created");
 
-
-        binding.LoginButton.setOnClickListener ( click -> {
+        EditText Email = findViewById(R.id.nameText);
+        Button loginButton = binding.loginButton;
+        binding.loginButton.setOnClickListener ( click -> {
             Log.i(TAG, "You logged in");
 
-            String name = binding.nameText.getText().toString();
+            String email = Email.getText().toString();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("LoginName" , email);
+            editor.apply();
 
             Intent nextPage = new Intent( MainActivity.this, SecondActivity.class);
-            nextPage.putExtra("UserName", name);
+            nextPage.putExtra("EmailAddress", email);
 
             startActivity( nextPage);
 
         });
 
-        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor myEditor = prefs.edit();
-
-        String userPhoneNumber = binding.nameText.getText().toString();
-        myEditor.putString("PhoneNumber", userPhoneNumber);
-        myEditor.apply();
-
-//        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater()
-//        );
-//
-//        setContentView(binding.getRoot());
-//        Log.i(TAG, "MainActivity is now created");
-//
-//        binding.nextPaeButton.setOnClickListener( click -> {
-//            Log.i(TAG, "You clicked the button");
-//
-//            String name = binding.nameText.getText().toString();
-//                                        //where you are, where you wanna go
-//            Intent nextPage = new Intent(this, SecondActivity.class );
-//
-//            nextPage.putExtra("UserName", name);
-////            nextPage.putExtra("Age", 123.456);
-//            startActivity(nextPage); //load that page
-//        });
     }
 
     @Override
