@@ -5,11 +5,8 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,39 +26,24 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest2 {
+public class testMissingUpperCase {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
-
+    /**
+     * Test case to check if the password has upper case letters
+     */
     @Test
-    public void mainActivityTest2() {
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.passwordText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        appCompatEditText.perform(replaceText("ttttttttttt"));
+    public void testMissingUpperCase() {
+        ViewInteraction appCompatEditText = onView(withId(R.id.passwordText));
+        appCompatEditText.perform(replaceText("password1111"));
 
-        ViewInteraction materialButton = onView(
-                allOf(withId(R.id.loginButton), withText("LOGIN"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
+        ViewInteraction materialButton = onView( withId(R.id.loginButton));
         materialButton.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.textView2), withText("Your password needs upper and lower case"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        textView.check(matches(withText("Your password needs upper and lower case")));
+        ViewInteraction textView2 = onView(withId(R.id.textView2));
+        textView2.check(matches(withText("Your password needs upper and lower case")));
     }
 
     private static Matcher<View> childAtPosition(

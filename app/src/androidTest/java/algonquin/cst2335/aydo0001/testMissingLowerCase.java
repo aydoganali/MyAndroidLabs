@@ -24,29 +24,29 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class testMissingLowerCase {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
-
     /**
-     * Test case to check if the password has lower and upper case letters
+     * Test case to check if the password has lower case letters
      */
     @Test
-    public void mainActivityTest() {
+
+    public void testMissingLowerCase() {
         ViewInteraction appCompatEditText = onView(withId(R.id.passwordText));
-        appCompatEditText.perform(replaceText("tttttttttttTTTT"));
+        appCompatEditText.perform(replaceText("PAASSWORD123"));
 
         ViewInteraction materialButton = onView( withId(R.id.loginButton));
         materialButton.perform(click());
 
         ViewInteraction textView2 = onView(withId(R.id.textView2));
-        textView2.check(matches(withText("Your password is complex enough")));
+        textView2.check(matches(withText("Your password needs upper and lower case")));
     }
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
