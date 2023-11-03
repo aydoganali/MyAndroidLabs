@@ -10,22 +10,22 @@
         android:id="@+id/myRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/userMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" >
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/addButton2"
-            android:layout_width="102dp"
-            android:layout_height="41dp"
-            android:layout_marginBottom="4dp"
-            android:text="Send"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="1dp" />
+
     </androidx.recyclerview.widget.RecyclerView>
+<!--    <Button-->
+<!--        android:id="@+id/addButton2"-->
+<!--        android:layout_width="102dp"-->
+<!--        android:layout_height="41dp"-->
+<!--        android:layout_marginBottom="4dp"-->
+<!--        android:text="Send"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        tools:layout_editor_absoluteX="1dp" />-->
 
     <Button
         android:id="@+id/addButton"
@@ -34,7 +34,8 @@
         android:layout_marginBottom="4dp"
         android:text="Send"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintStart_toStartOf="parent" />
+<!--        app:layout_constraintStart_toStartOf="@+id/addButton" />-->
 
     <EditText
         android:id="@+id/userMessage"
@@ -45,14 +46,15 @@
         android:hint="Type here"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="118dp" />
+        app:layout_constraintEnd_toStartOf="@+id/receiveButton"
+        app:layout_constraintStart_toEndOf="@+id/addButton" />
 
     <Button
         android:id="@+id/receiveButton"
-        android:layout_width="97dp"
-        android:layout_height="39dp"
+        android:layout_width="109dp"
+        android:layout_height="41dp"
         android:text="Recieve"
-        tools:layout_editor_absoluteX="309dp"
-        tools:layout_editor_absoluteY="689dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

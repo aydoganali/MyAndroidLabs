@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import algonquin.cst2335.aydo0001.data.ChatRoomViewModel;
 import algonquin.cst2335.aydo0001.databinding.ActivityChatRoomBinding;
@@ -20,10 +22,11 @@ import algonquin.cst2335.aydo0001.databinding.SentRowLayoutBinding;
 
 public class ChatRoom extends AppCompatActivity {
 
-    ArrayList<String> theMessages = null;
+    ArrayList<ChatMessage> messages = new ArrayList<>();
 
-    ActivityChatRoomBinding binding ;
-    RecyclerView.Adapter myAdapter = null;
+    ActivityChatRoomBinding binding;
+    private RecyclerView.Adapter myAdapter;
+    ChatRoomViewModel chatModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +36,49 @@ public class ChatRoom extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //get the data from the ViewModel:
-        ChatRoomViewModel chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
-        theMessages = chatModel.theMessages;
+
 
         binding.addButton.setOnClickListener( click ->{
-            String newMessage = binding.userMessage.getText().toString();
-            theMessages.add(newMessage);
+            String messageText = binding.userMessage.getText().toString();
+            ChatMessage sentMessage = new ChatMessage(messageText, true);
+            messages.add(sentMessage);
+            myAdapter.notifyItemInserted(messages.size()-1);//will redraw
             binding.userMessage.setText("");//remove what you typed
             //tell the recycle view to update:
-            myAdapter.notifyDataSetChanged();//will redraw
+
         });
+
+        binding.receiveButton.setOnClickListener( click ->{
+            String messageText = binding.userMessage.getText().toString();
+            ChatMessage receivedMessage = new ChatMessage(messageText, false);
+            messages.add(receivedMessage);
+            myAdapter.notifyItemInserted(messages.size()-1);//will redraw
+            binding.userMessage.setText("");//remove what you typed
+            //tell the recycle view to update:
+
+        });
+
+        binding.myRecycler.setLayoutManager(new LinearLayoutManager(this));
+        chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
+        messages = chatModel.messages.getValue();
+
+        //this represents a single row on the list
+        class MyRowHolder extends RecyclerView.ViewHolder {
+
+            public TextView messageText;
+            public TextView timeText;
+
+            public MyRowHolder(@NonNull View itemView) {
+                super(itemView);
+                //like onCreate above
+                messageText = itemView.findViewById(R.id.message);
+                timeText = itemView.findViewById(R.id.time); //find the ids from XML to java
+            }
+        }
+        if(messages == null)
+        {
+            chatModel.messages.postValue( messages = new ArrayList<ChatMessage>());
+        }
 
         //creates rows 0 to 50
         binding.myRecycler.setAdapter(
@@ -54,57 +90,71 @@ public class ChatRoom extends AppCompatActivity {
                         //viewType will be 0 for the first 3 rows, 1 for everything after
 
                         if(viewType == 0) {
-                            SentRowLayoutBinding rowBinding = SentRowLayoutBinding.inflate(getLayoutInflater(), parent, false);
-                            return new MyRowHolder(rowBinding.getRoot()); //call your constructor below
+                            SentRowLayoutBinding binding = SentRowLayoutBinding.inflate(getLayoutInflater(), parent, false);
+                            return new MyRowHolder(binding.getRoot()); //call your constructor below
                         }
                         else {  //after row 3
-                            ReceiveRowLayoutBinding rowBinding = ReceiveRowLayoutBinding.inflate(getLayoutInflater(), parent, false);
-                            return new MyRowHolder(rowBinding.getRoot());
+                            ReceiveRowLayoutBinding binding = ReceiveRowLayoutBinding.inflate(getLayoutInflater(), parent, false);
+                            return new MyRowHolder(binding.getRoot());
                         }
                     }
+                    @Override
+                    public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
+                        //replace the default text with text at row position
+                        ChatMessage chatMessage = messages.get(position);
+                        holder.messageText.setText(chatMessage.getMessage());
 
+                        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
+                        String currentDateandTime = sdf.format(new Date());
+                        holder.timeText.setText((CharSequence) currentDateandTime);
+
+                    }
+                    @Override
+                    public int getItemCount() {
+
+                        return messages.size();
+                    }
                     @Override
                     public int getItemViewType(int position) {
                         //given the row, return an layout id for that row
 
-                        if(position < 3)
+                        if(messages.get(position).isSentButton()) {
                             return 0;
-                        else
+                        } else
                             return 1;
                     }
 
-                    @Override
-                    public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
-                        //replace the default text with text at row position
 
-                        String forRow = theMessages.get(position);
-                        holder.message.setText(forRow);
-                        holder.time.setText("time for row " + position);
-                    }
 
                     //number of rows you want
-                    @Override
-                    public int getItemCount() {
-                        return theMessages.size();
-                    }
-                }
-        ); //populate the list
 
-        binding.myRecycler.setLayoutManager(new LinearLayoutManager(this));
+                }
+        );
+
+
 
     }
 
 
-    //this represents a single row on the list
-    class MyRowHolder extends RecyclerView.ViewHolder {
+    public class ChatMessage {
+        String message;
+        //        String timeSent;
+        boolean isSentButton;
 
-        public TextView message;
-        public TextView time;
-        public MyRowHolder(@NonNull View itemView) {
-            super(itemView);
-            //like onCreate above
-            message = itemView.findViewById(R.id.textView);
-            time = itemView.findViewById(R.id.textView3); //find the ids from XML to java
+        ChatMessage(String m, boolean sent)
+        {
+            message = m;
+//            timeSent = t;
+            isSentButton = sent;
+        }
+        public String getMessage() {
+            return message;
+        }
+        public boolean isSentButton() {
+            return isSentButton;
         }
     }
 }
+
+
+
