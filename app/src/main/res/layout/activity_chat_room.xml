@@ -18,43 +18,27 @@
 
 
     </androidx.recyclerview.widget.RecyclerView>
-<!--    <Button-->
-<!--        android:id="@+id/addButton2"-->
-<!--        android:layout_width="102dp"-->
-<!--        android:layout_height="41dp"-->
-<!--        android:layout_marginBottom="4dp"-->
-<!--        android:text="Send"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        tools:layout_editor_absoluteX="1dp" />-->
 
     <Button
         android:id="@+id/addButton"
-        android:layout_width="102dp"
-        android:layout_height="41dp"
+        android:layout_width="138dp"
+        android:layout_height="43dp"
         android:layout_marginBottom="4dp"
-        android:text="Send"
+        android:text="Add Message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-<!--        app:layout_constraintStart_toStartOf="@+id/addButton" />-->
 
     <EditText
         android:id="@+id/userMessage"
-        android:layout_width="182dp"
-        android:layout_height="45dp"
+        android:layout_width="221dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="4dp"
         android:ems="10"
         android:hint="Type here"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/receiveButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addButton" />
 
-    <Button
-        android:id="@+id/receiveButton"
-        android:layout_width="109dp"
-        android:layout_height="41dp"
-        android:text="Recieve"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
