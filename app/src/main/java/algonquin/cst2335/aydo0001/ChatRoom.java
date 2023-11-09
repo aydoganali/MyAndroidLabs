@@ -85,6 +85,26 @@ public class ChatRoom extends AppCompatActivity {
                 Log.d("TAG", "The id created is:" + thisMessage.id);
             }); //the body of run()
         });
+        binding.receiveButton.setOnClickListener(click -> {
+            String newMessage = binding.userMessage.getText().toString();
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
+            String currentDateandTime = sdf.format(new Date());
+
+            // Create a new ChatMessage for received message (use false for the third parameter)
+            ChatMessage receivedMessage = new ChatMessage(newMessage, currentDateandTime, false);
+
+            theMessages.add(receivedMessage);
+            binding.userMessage.setText(""); // remove what you typed
+            myAdapter.notifyDataSetChanged(); // will redraw
+
+            // Add to database on another thread:
+            Executor thread1 = Executors.newSingleThreadExecutor();
+            thread1.execute(() -> {
+                // This is on a background thread
+                receivedMessage.id = mDao.insertMessage(receivedMessage); // Get the ID from the database
+                Log.d("TAG", "The id created is:" + receivedMessage.id);
+            });
+        });
 
 
         binding.myRecycler.setAdapter(
@@ -109,10 +129,16 @@ public class ChatRoom extends AppCompatActivity {
                     public int getItemViewType(int position) {
                         //given the row, return an layout id for that row
 
-                        if(position < 3)
+                        if(theMessages.get(position).SendOrReceive) {
                             return 0;
-                        else
+                        } else
                             return 1;
+
+                    }
+                    //number of rows you want
+                    @Override
+                    public int getItemCount() {
+                        return theMessages.size();
                     }
 
                     @Override
@@ -124,16 +150,13 @@ public class ChatRoom extends AppCompatActivity {
                         holder.time.setText(theMessages.get(position).timeSent);
                     }
 
-                    //number of rows you want
-                    @Override
-                    public int getItemCount() {
-                        return theMessages.size();
-                    }
+
                 }
         ); //populate the list
 
         binding.myRecycler.setLayoutManager(new LinearLayoutManager(this));
-
+        chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
+        theMessages = chatModel.theMessages;
     }
 
 
@@ -187,6 +210,8 @@ public class ChatRoom extends AppCompatActivity {
 
             message = itemView.findViewById(R.id.message);
             time = itemView.findViewById(R.id.time); //find the ids from XML to java
+
+
         }
     }
 }
