@@ -4,6 +4,11 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import algonquin.cst2335.aydo0001.databinding.ActivityMainBinding;
 
 /**
@@ -19,12 +24,38 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param savedInstanceState A Bundle containing the saved state, if any.
      */
-
+    protected String cityName;
+    RequestQueue queue = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //This part goes at the top of the onCreate function:
+        queue = Volley.newRequestQueue(this);
+
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.getForecast.setOnClickListener(click -> {
+            cityName = binding.passwordText.getText().toString();
+            String stringURL = "";
+
+            //this goes in the button click handler:
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, stringURL, null,
+                    (response) -> {
+                    },
+                    (error) -> {
+                    });
+            queue.add(request);
+
+        });
+    }
+
+
+
+
+
+
 
         binding.loginButton.setOnClickListener(click -> {
 

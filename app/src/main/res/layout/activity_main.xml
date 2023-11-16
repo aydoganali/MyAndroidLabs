@@ -9,34 +9,36 @@
     <TextView
 
         android:id="@+id/textView2"
-        android:layout_width="266dp"
-        android:layout_height="69dp"
-        android:text="Type your password:"
+        android:layout_width="252dp"
+        android:layout_height="29dp"
+        android:text="Type in the name of a city:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.007"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.157" />
+        app:layout_constraintVertical_bias="0.003" />
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LOGIN"
+        android:layout_width="265dp"
+        android:layout_height="41dp"
+        android:text="GET FORECAST"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/passwordText"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/passwordText"
         app:layout_constraintTop_toBottomOf="@+id/passwordText"
-        app:layout_constraintVertical_bias="0.213" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/passwordText"
         android:layout_width="264dp"
         android:layout_height="64dp"
-        android:layout_marginTop="32dp"
-        android:hint="Password"
+        android:layout_marginTop="4dp"
+        android:hint="Type city name here"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
